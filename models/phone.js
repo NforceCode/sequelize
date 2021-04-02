@@ -14,14 +14,50 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Phone.init({
-    brand: DataTypes.STRING,
-    model: DataTypes.STRING,
-    price: DataTypes.DECIMAL,
-    cpu: DataTypes.STRING,
-    battery: DataTypes.INTEGER
+    brand: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    model: {
+      type :DataTypes.STRING,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    price: {
+      type :DataTypes.DECIMAL(10,2),
+      validate: {
+        notNull: true,
+        notEmpty: true,
+        isNumeric: true,
+        min: 1
+      }
+    },
+    cpu: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    battery: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: true,
+        notEmpty: true,
+        isNumeric:true,
+        min: 1
+      }
+    }
   }, {
     sequelize,
     modelName: 'Phone',
+    tableName: 'phones',
+    underscored: true
   });
   return Phone;
 };

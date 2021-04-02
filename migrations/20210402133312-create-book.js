@@ -1,33 +1,32 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('phones', {
+    await queryInterface.createTable('books', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      brand: {
-        allowNull: false,
+      name: {
+        allowNull:false,
         type: Sequelize.STRING
       },
-      model: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
+      author: {
+        allowNull:false,
+        type: Sequelize.STRING
+      },
+      pages: {
+        allowNull:false,
+        type: Sequelize.INTEGER
+      },
+      language: {
+        allowNull:false,
+        type: Sequelize.STRING(64)
       },
       price: {
-        allowNull: false,
-        type: Sequelize.DECIMAL(10,2)
-      },
-      cpu: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      battery: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        allowNull:false,
+        type: Sequelize.DECIMAL(8,2)
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('phones');
+    await queryInterface.dropTable('books');
   }
 };

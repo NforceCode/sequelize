@@ -1,8 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
-const {isAfter} = require('date-fns');
 module.exports = (sequelize, DataTypes) => {
-  class CreditCard extends Model {
+  class book extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,54 +11,56 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  CreditCard.init(
+  book.init(
     {
-      holder: {
+      name: {
         type: DataTypes.STRING,
         validate: {
           notNull: true,
           notEmpty: true
         }
       },
-      cardNumber: {
-        field: 'card_number',
-        type: DataTypes.TEXT,
-        unique: true,
+      author: {
+        type: DataTypes.STRING(64),
         validate: {
           notNull: true,
           notEmpty: true,
-          isCreditCard: true
+          isAlpha: true
         }
       },
-      ccv: { 
-        type: DataTypes.DECIMAL(3, 0),
-        notNull: true,
-        notEmpty: true,
-        isInt: true,
-        len:[3] 
-      },
-      expirationDate: {
-        field: 'expiration_date',
-        type: DataTypes.DATEONLY,
+      pages: {
+        type: DataTypes.INTEGER,
         validate: {
-          isDate: true
-          
+          notNull: true,
+          notEmpty: true,
+          isNumeric: true,
+          len: [1, 4],
+          min: 1
         }
       },
-      emitter: {
+      language: {
         type: DataTypes.STRING,
         validate: {
           notNull: true,
-          notEmpty: true
+          notEmpty: true,
+          isAlpha: true
+        }
+      },
+      price: {
+        type: DataTypes.DECIMAL(8, 2),
+        validate: {
+          notNull: true,
+          notEmpty: true,
+          min: 1
         }
       }
     },
     {
       sequelize,
-      modelName: 'CreditCard',
-      tableName: 'credit_cards',
+      modelName: 'book',
+      tableName: 'books',
       underscored: true
     }
   );
-  return CreditCard;
+  return book;
 };
